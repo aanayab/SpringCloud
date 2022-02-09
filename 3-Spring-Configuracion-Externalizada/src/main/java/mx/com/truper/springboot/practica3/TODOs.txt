@@ -1,0 +1,41 @@
+TODO 1.
+Primero hechar a andar el proyecto por default, sin definir propiedades.
+Revisar que cada peticion GET a http://localhost:8080/ muestra mensaje en consola.
+
+
+TODO 2.
+Crear archivo application.yml y asignar propiedades:
+server.port: 8081 y controller.message: Mi mensaje desde application.yml
+Ejecutar el proyecto y probar http://localhost:8081/, revisar mensajes en consola.
+
+
+TODO 3.
+Definir en archivo application.properties las propiedades:
+server.port=8085 y controller.message=Mi mensaje desde application.properties
+Ejecutar el proyecto y probar http://localhost:8081/ y http://localhost:8085/ revisar mensajes en consola.
+
+
+TODO 4.
+Definir variable del sistema en Mac OS y/o Windows:
+export SERVER_PORT=9090
+export CONTROLLER_MESSAGE='Mi mensaje desde variable del sistema'
+Compilar el proyecto desde consola con: mvn clean package
+Ejecutar proyecto desde consola con: java -jar target/3-Spring-Configuracion-Externalizada-0.0.1-SNAPSHOT.jar
+Probar http://localhost:9090
+
+
+TODO 5.
+Definir variable del sistema en Mac OS y/o Windows:
+export SPRING_APPLICATION_JSON='{"controller":{"message":"Mi mensaje desde SPRING_APPLICATION_JSON"}, "server":{"port":9099}}'
+Compilar el proyecto desde consola con: mvn clean package
+Ejecutar proyecto desde consola con: java -jar target/3-Spring-Configuracion-Externalizada-0.0.1-SNAPSHOT.jar
+Probar http://localhost:9099
+
+
+TODO 6.
+Definir variable del sistema en Mac OS y/o Windows:
+export SPRING_APPLICATION_JSON='{"controller":{"message":"Mi mensaje desde SPRING_APPLICATION_JSON"}, "server":{"port":9099}}'
+Compilar el proyecto desde consola con: mvn clean package
+Ejecutar proyecto desde consola con: java -jar target/3-Spring-Configuracion-Externalizada-0.0.1-SNAPSHOT.jar
+Probar http://localhost:9099
+

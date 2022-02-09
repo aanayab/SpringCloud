@@ -1,0 +1,68 @@
+---
+eureka:
+  context-path: /my-eureka-server
+  peer-1:
+    host: eureka-host1
+    port: 9091
+  peer-2:
+    host: eureka-host2
+    port: 9092
+  single:
+    host: localhost
+    port: 9099
+
+spring:
+  application:
+    name: my-client-app
+
+info:
+  app-name: ${spring.application.name}
+  
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+---
+spring:
+  profiles: client-in-single-eureka
+
+eureka:
+  client:
+    service-url:
+      #            http://localhost:9099/my-eureka-server/eureka
+      defaultZone: http://${eureka.single.host}:${eureka.single.port}${eureka.context-path}/eureka
+  instance:
+    #            client-in-single-eureka:8888:12312334534535345345345
+    instance-id: ${spring.application.name}:${server.port}:${spring.application.instance_id:${random.value}}
+
+server:
+  port: ${PORT:${SERVER_PORT:0}}
+    # java -jar app.jar --spring.profiles.active=client-in-single-eureka --spring.application.instance_id=123 
+    #                   [--server.port=8888 | --port=8888]
+  
+# mvn spring-boot:run -Dspring-boot.run.profiles=client-in-single-eureka -Dspring-boot.run.arguments=--server.port=55991
+
+---
+spring:
+  profiles: client-in-eureka-cluster
+
+eureka:
+  client:
+    service-url:
+      #            http://eureka-host1:9091/my-eureka-server/eureka,http://eureka-host2:9092/my-eureka-server/eureka
+      defaultZone: http://${eureka.peer-1.host}:${eureka.peer-1.port}${eureka.context-path}/eureka
+                   #,http://${eureka.peer-2.host}:${eureka.peer-2.port}${eureka.context-path}/eureka
+  instance:
+    #            client-in-single-eureka:8888:12312334534535345345345
+    instance-id: ${spring.application.name}:${server.port}:${spring.application.instance_id:${random.value}}
+
+server:
+  port: ${PORT:${SERVER_PORT:0}}

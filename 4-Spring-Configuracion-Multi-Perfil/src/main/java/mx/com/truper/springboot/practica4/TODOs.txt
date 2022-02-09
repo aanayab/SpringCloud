@@ -1,0 +1,28 @@
+TODO 1.
+Analizar clase ConnectionDataBase
+
+
+TODO 2.
+Analizar interface DummyDataSource
+
+
+TODO 3.
+Analizar anotaciones ProductionProfile y StagingProfile
+
+
+TODO 4.
+Definir 4 beans distintos de tipo DummyDataSource para los distintos perfiles:
+dev, qa, staging y production en clase de configuracion ProfilesConfig 
+
+
+TODO 5.
+Definir configuracion multi-perfil en archivo application.yml para los 4 ambientes y
+asignar en el perfil default la propiedad spring:profiles:active: dev
+
+
+TODO 6.
+Definir configuracion mediante archivos propertis para los 4 ambienes  y
+asignar en el perfil default la propiedad spring.profiles.active=dev
+
+
+Verificar que el archivo properties sobre-escribe la configuracion definida por YAML

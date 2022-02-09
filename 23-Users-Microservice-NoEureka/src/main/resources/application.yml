@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: users-no-eureka-microservice
+  profiles:
+    active:
+    # local, ribbon-api o load-balanced-rest-template
+    - load-balanced-rest-template
+
+server:
+  servlet:
+    context-path: /users-no-eureka-service
+  port: ${PORT:${SERVER_PORT:0}}
+
+info:
+  app-name: ${spring.application.name}
+  
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    info:
+      enabled: true
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'
+
+# nombre del microservicio
+uppercase-microservice:
+  ribbon:
+    eureka:
+      enabled: false
+    listOfServers: staging-server:9051,production-server:9052
+    
+
+logging:
+  level:
+    #org.apache.http: DEBUG
+    mx.com.truper.springboot.practica23.ribbon.usersmicroservice.logging: DEBUG
+    org.springframework.cloud: DEBUG
+    com.netflix.loadbalancer: DEBUG
+
+#mvn spring-boot:run -Dspring-boot.run.profiles=client-in-single-eureka -Dspring-boot.run.arguments=--server.port=55991

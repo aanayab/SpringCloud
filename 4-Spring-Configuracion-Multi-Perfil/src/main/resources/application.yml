@@ -1,0 +1,42 @@
+#A comment
+
+# No dejar hard-codeado un perfil activo, siempre activarlo en runtime
+#spring:
+  #profiles:
+    #active:
+    #- staging
+
+logging:
+  file: logs/application.log
+    
+---
+spring:
+  profiles: dev
+  
+myapp:
+  connection:
+    url: jdbc:mysql://dev-server:3306/myapp_db
+    
+---
+spring:
+  profiles: qa
+  
+myapp:
+  connection:
+    url: jdbc:mysql://qa-server:3306/myapp_db
+
+---
+spring:
+  profiles: staging
+  
+myapp:
+  connection:
+    url: jdbc:mysql://staging-server:3306/myapp_db
+            
+---
+spring:
+  profiles: production
+  
+myapp:
+  connection:
+    url: jdbc:mysql://production-server:3306/myapp_db

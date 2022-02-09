@@ -1,0 +1,6 @@
+#A comment
+controller:
+  message: Mi mensaje desde el application.yml
+  
+server:
+  port: 8081

@@ -1,0 +1,28 @@
+# For single Eureka instance
+server:
+  port: 9099
+  servlet:
+    context-path: /my-eureka-server
+
+spring:
+  application:
+    name: my-eureka-server
+    
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:${server.port}${server.servlet.context-path}/eureka

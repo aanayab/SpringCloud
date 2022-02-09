@@ -1,0 +1,67 @@
+eureka:
+  context-path: /my-eureka-server
+  single-instance:
+    host: localhost
+    port: 9099
+  client:
+    service-url: 
+      defaultZone: http://${eureka.single-instance.host}:${eureka.single-instance.port}${eureka.context-path}/eureka
+    register-with-eureka: false
+
+spring:
+  application:
+    name: hystrix-dashboard-microservice
+
+server:
+  servlet:
+    context-path: 
+  port: 9999
+
+info:
+  app-name: ${spring.application.name}
+  
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    info:
+      enabled: true
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'
+
+# OJO: cluster-config y app-config deben de hacer match.
+
+# 1. Un Turbine por cada conjunto de replicas x microservicio
+#    http://host-turbine:port/hystrix
+#         stream: http://host-turbine:port/turbine.stream?cluster={cluster-config}
+# turbine:
+#   aggregator:
+#     cluster-config: SENTENCE-MICROSERVICE,NOUN-MICROSERVICE
+#   app-config: sentence-microservice,noun-microservice
+
+# 2. Un Turbine para todas las replicas de todos los microservicios en el cluster
+#    http://host-turbine:port/hystrix
+#         stream: http://host-turbine:port/turbine.stream?cluster=default
+# turbine:
+#   app-config: sentence-microservice,noun-microservice
+#   cluster-name-expression: "'default'"
+
+turbine:
+  aggregator:
+    cluster-config: SENTENCE-MICROSERVICE,NOUN-MICROSERVICE
+  app-config: sentence-microservice,noun-microservice
+  #cluster-name-expression: "'default'"
+  
+
+logging:
+  level:
+    #org.apache.http: DEBUG
+    org.springframework.cloud: OFF
+    com.netflix.loadbalancer: OFF
+#mvn spring-boot:run -Dspring-boot.run.profiles=client-in-single-eureka -Dspring-boot.run.arguments=--server.port=55991

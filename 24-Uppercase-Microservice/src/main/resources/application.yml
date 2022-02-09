@@ -1,0 +1,47 @@
+eureka:
+  context-path: /my-eureka-server
+  single-instance:
+    host: localhost
+    port: 9099
+  client:
+    service-url: 
+      defaultZone: http://${eureka.single-instance.host}:${eureka.single-instance.port}${eureka.context-path}/eureka
+  instance:
+    statusPageUrlPath: ${server.servlet.context-path}${management.endpoints.web.base-path}/info
+    healthCheckUrlPath: ${server.servlet.context-path}${management.endpoints.web.base-path}/health
+    instanceId: ${spring.application.name}:${server.port}:${spring.application.instance_id:${random.value}}
+
+spring:
+  application:
+    name: uppercase-microservice
+
+server:
+  servlet:
+    context-path: /uppercase-service
+  port: ${PORT:${SERVER_PORT:0}}
+
+info:
+  app-name: ${spring.application.name}
+  
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    info:
+      enabled: true
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    #org.apache.http: DEBUG 
+    org.springframework.cloud: INFO
+    com.netflix.loadbalancer: OFF
+
+#mvn spring-boot:run -Dspring-boot.run.profiles=client-in-single-eureka -Dspring-boot.run.arguments=--server.port=55991
